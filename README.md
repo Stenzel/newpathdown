@@ -23,7 +23,7 @@ For normal FIR filtering, each output sample y[n] is a linear combination of N i
 ## The New Method
 If this scheme is used for downsampling, something strange happens - filter length and cutoff frequency are magically adjusted, and there is no need to increase buffer size with higher downsampling ratios. Calculation will take more time for large downsampling ratios, but that's what you would expect from a longer filter. As input and output sample rates differ, the algorithm is a bit different: 
 The contribution of x[n] to the N buffered outputs y[0...N] is added. Take the time index m = n/decimation_ratio in the grid of the target rate and use the fractional part to to get the proper polyphase filter. If the integer part of m changes, output a sample and shift in a zero. All the troubles with downsampling disperse! 
-Although up- and downsampling also share the same polyphase filter bank, the resulting filter for downsampling gets longer the more we downsample.
+Although up- and downsampling also share the same polyphase filter bank, the resulting filter for downsampling gets longer with higher ratio.
 
 However, this cannot be used for upsampling. For a flexible system with time varying resampling ratios, like every sample player, it is mandatory to support up- and downsampling, so if these cannot be combined, it would make little sense. Luckily such a combination is possible, but it requires some special code for the transitions. 
 
