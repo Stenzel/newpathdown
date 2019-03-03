@@ -29,3 +29,6 @@ However, this cannot be used for upsampling. For a flexible system with time var
 The code here demonstrates this combination of conventional upsampling, the new downsampling and transitions from either to the other. If none of this writing makes sense to you, maybe the code will. It should however by no mean be considered production quality code, in the current form it is more a proof of concept. 
 
 All of this is quite suitable for SIMD optimizations, code for this will appear here in the near future.
+
+## Demo
+To run the demo, download the files and type "make" in your terminal. A new audio file called "demo.wav" will be created to demonstrate the resampling. The executable file "demo" can also be run with another wav audio file as argument, like "./demo mysong.wav"
