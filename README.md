@@ -12,10 +12,9 @@ For resampling there are basically two versions:
 Upsampling is resampling with a higher rate. Pitch goes down if you play back audio upsampled - confusing, I know. Downsampling is resampling with a lower rate, and pitch goes up. 
 
 ## Upsampling
-Let's first focus on upsampling. Here we would need to evaluate the infinite summation formula for each time t to get the resampled sample. To avoid infinite summation, we use a windowed sinc filter of finite length. We'll need this filter sampled at different fractional positions in between samples, so the usual approach is to have a bank of say 256 filters and interpolate between them. Or just take the nearest, this works too. As the bandwidth is increased, there is no need to fight aliasing.
+Here the best would be to evaluate the infinite summation formula for each time t to get the resampled sample. To avoid infinite summation, we use a windowed sinc filter of finite length. We'll need this filter sampled at different fractional positions in between samples, so the usual approach is to have a bank of say 256 filters and interpolate between them. Or just take the nearest, this works too. As the bandwidth is increased, there is no need to fight aliasing. This method is quite standard, and I used it for upsampling and downsampling. But no more!
 
 ## Downsampling
-This method is quite standard, and I used it for upsampling and downsampling. But no more!
 Downsampling has different requirements, the signal has to be bandlimited to half the new sampling rate, which is lower now. Luckily we can combine the polyphase reconstruction filter with a sinc style lowpass, but the lowpass cutoff frequency depends on the downsampling ratio. Lower cutoff requires a longer filter, as a rule of thumb each input sample should contribute to at least two output samples, better more, so the filter length needs to be minimum twice the downsampling ratio. With the filter size and cutoff changing, we also need to have as many samples in direct access as the filter length, which is a limiting factor for many applications where samples are streamed. There is however a simple solution to all these problems of downsampling, so simple that in hindsight I cannot grasp how I could ever be so stupid to miss it.
 
 ## FIR Filtering
